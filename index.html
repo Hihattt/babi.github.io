@@ -34,75 +34,44 @@
 
 <script>
 
-const no = document.getElementById("no")
-const yes = document.getElementById("yes")
+const noBtn = document.getElementById("no")
+const yesBtn = document.getElementById("yes")
 const card = document.querySelector(".card")
+const message = document.getElementById("message")
 
 let scale = 1
 
+
 function moverBoton(e){
 
-// evita que el toque lo active
-e.preventDefault()
+if(e) e.preventDefault()
 
-const cardRect = card.getBoundingClientRect()
-
-const maxX = cardRect.width - no.offsetWidth
-const maxY = cardRect.height - no.offsetHeight
+const maxX = card.clientWidth - noBtn.offsetWidth
+const maxY = card.clientHeight - noBtn.offsetHeight
 
 const x = Math.random() * maxX
 const y = Math.random() * maxY
 
-no.style.left = x + "px"
-no.style.top = y + "px"
+noBtn.style.left = x + "px"
+noBtn.style.top = y + "px"
 
 scale += 0.1
-yes.style.transform = `scale(${scale})`
+yesBtn.style.transform = `scale(${scale})`
 
 }
 
 
-// PC
-no.addEventListener("mouseenter", moverBoton)
-
-card.addEventListener("touchstart", function(e){
-
-  const touch = e.touches[0]
-  const noRect = no.getBoundingClientRect()
-
-  // si el dedo toca cerca del botón
-  if(
-    touch.clientX >= noRect.left - 20 &&
-    touch.clientX <= noRect.right + 20 &&
-    touch.clientY >= noRect.top - 20 &&
-    touch.clientY <= noRect.bottom + 20
-  ){
-    moverBoton()
-  }
-
-}, { passive:true })
-
-
-// botón sí crece
-
-scale += 0.1
-
-yes.style.transform = `scale(${scale})`
-
-
-e.preventDefault()
-{ passive:false }
-
-no.addEventListener("touchmove", moverBoton, { passive:false })
+// funciona en todos los dispositivos
+noBtn.addEventListener("pointerenter", moverBoton)
+noBtn.addEventListener("pointerdown", moverBoton)
 
 
 // botón sí
+yesBtn.addEventListener("click",()=>{
 
-yes.addEventListener("click",()=>{
+card.style.display="none"
 
-document.querySelector(".card").style.display="none"
-
-message.style.display="block"
+message.style.display="flex"
 
 createHearts()
 
@@ -112,7 +81,6 @@ createHearts()
 
 
 // corazones
-
 function createHearts(){
 
 setInterval(()=>{
@@ -129,7 +97,6 @@ heart.style.fontSize=Math.random()*30+20+"px"
 
 document.body.appendChild(heart)
 
-
 setTimeout(()=>{
 
 heart.remove()
@@ -140,12 +107,11 @@ heart.remove()
 
 }
 
-
-
 </script>
 
 
 </body>
 
 </html>
+
 
