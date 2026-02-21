@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>amorcito ❤️</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+
+<div class="card">
+
+<h2>Para wawita ❤️</h2>
+
+<p id="question">¿Me amas?</p>
+
+<button id="yes">Sí ❤️</button>
+
+<button id="no">No</button>
+
+</div>
+
+
+<div id="message">
+
+<h1>Sabía que dirías que sí ❤️</h1>
+
+ <img src="img/love-amor.gif" class="gif">
+
+</div>
+
+
+
+<script>
+
+const no = document.getElementById("no")
+const yes = document.getElementById("yes")
+const card = document.querySelector(".card")
+const message = document.getElementById("message")
+
+let scale = 1
+
+
+no.addEventListener("mouseover",()=>{
+
+const cardRect = card.getBoundingClientRect()
+const btnRect = no.getBoundingClientRect()
+
+const maxX = cardRect.width - btnRect.width
+const maxY = cardRect.height - btnRect.height
+
+const x = Math.random() * maxX
+const y = Math.random() * maxY
+
+no.style.left = x + "px"
+no.style.top = y + "px"
+
+
+scale += 0.1
+yes.style.transform = `scale(${scale})`
+
+})
+
+yes.addEventListener("click",()=>{
+
+card.style.display="none"
+message.style.display="block"
+createHearts()
+
+
+// botón sí crece
+
+scale += 0.1
+
+yes.style.transform = `scale(${scale})`
+
+
+})
+
+
+// botón sí
+
+yes.addEventListener("click",()=>{
+
+document.querySelector(".card").style.display="none"
+
+message.style.display="block"
+
+createHearts()
+
+})
+
+
+
+
+// corazones
+
+function createHearts(){
+
+setInterval(()=>{
+
+const heart = document.createElement("div")
+
+heart.innerHTML="❤️"
+
+heart.classList.add("heart")
+
+heart.style.left=Math.random()*100+"vw"
+
+heart.style.fontSize=Math.random()*30+20+"px"
+
+document.body.appendChild(heart)
+
+
+setTimeout(()=>{
+
+heart.remove()
+
+},3000)
+
+},200)
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
