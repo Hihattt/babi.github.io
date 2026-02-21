@@ -37,18 +37,18 @@
 const no = document.getElementById("no")
 const yes = document.getElementById("yes")
 const card = document.querySelector(".card")
-const message = document.getElementById("message")
 
 let scale = 1
 
+function moverBoton(e){
 
-no.addEventListener("mouseover",()=>{
+// evita que el toque lo active
+e.preventDefault()
 
 const cardRect = card.getBoundingClientRect()
-const btnRect = no.getBoundingClientRect()
 
-const maxX = cardRect.width - btnRect.width
-const maxY = cardRect.height - btnRect.height
+const maxX = cardRect.width - no.offsetWidth
+const maxY = cardRect.height - no.offsetHeight
 
 const x = Math.random() * maxX
 const y = Math.random() * maxY
@@ -56,11 +56,40 @@ const y = Math.random() * maxY
 no.style.left = x + "px"
 no.style.top = y + "px"
 
-
 scale += 0.1
 yes.style.transform = `scale(${scale})`
 
-})
+}
+
+
+// PC
+no.addEventListener("mouseenter", moverBoton)
+
+card.addEventListener("touchstart", function(e){
+
+  const touch = e.touches[0]
+  const noRect = no.getBoundingClientRect()
+
+  // si el dedo toca cerca del botón
+  if(
+    touch.clientX >= noRect.left - 20 &&
+    touch.clientX <= noRect.right + 20 &&
+    touch.clientY >= noRect.top - 20 &&
+    touch.clientY <= noRect.bottom + 20
+  ){
+    moverBoton()
+  }
+
+}, { passive:true })
+
+const no = document.getElementById("no")
+const yes = document.getElementById("yes")
+const card = document.querySelector(".card")
+const message = document.getElementById("message")
+
+let scale = 1
+
+
 
 yes.addEventListener("click",()=>{
 
@@ -129,4 +158,5 @@ heart.remove()
 
 
 </body>
+
 </html>
